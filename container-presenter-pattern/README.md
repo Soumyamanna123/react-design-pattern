@@ -1,47 +1,71 @@
-Container–Presenter Pattern (aka Smart–Dumb Components)
+# Container–Presenter Pattern in React
 
-1️⃣ Core Idea
+## What is the Container–Presenter Pattern?
 
-Separate concerns: Keep business logic (data fetching, state management, API calls) separate from UI rendering.
+The **Container–Presenter Pattern** (also known as **Smart–Dumb Component Pattern**) is a design approach in React that separates **business logic** from **UI rendering**.  
 
-Container (Smart Component): Handles logic, state, and side effects.
+- **Container (Smart) Components**: Handle data fetching, state management, and business logic.  
+- **Presenter (Dumb) Components**: Handle only UI rendering and user interactions, receiving data and callbacks via props.  
 
-Presenter (Dumb/Display Component): Handles UI, receives data via props, and raises events back to the container.
+**Benefits:**
+- Clear separation of concerns.
+- Reusable and testable components.
+- Easier maintenance and scalability.
 
-2️⃣ Roles & Responsibilities
-Component Type	Responsibilities	Example
-Container	- Fetch data from APIs
-- Manage state (loading, error, cart, filters)
-- Handle business logic (add to cart, sorting, filtering)	ProductListContainer
-Presenter	- Render UI based on props
-- Emit events (like button clicks)
-- Stateless or minimal local state	ProductListPresenter, ProductCard, CartSummary
-3️⃣ Benefits
+---
 
-Separation of concerns – Logic and UI are decoupled.
+## Assignment Overview
 
-Reusability – Presenter components can be reused with different data sources.
+This assignment demonstrates how to implement the **Container–Presenter Pattern** in a real-world scenario: building a **Product List page** with cart functionality.  
 
-Testability – Containers and Presenters can be tested independently.
+The goal is to create a modular React application where **logic and presentation are strictly separated**.
 
-Maintainability – Easier to debug, extend, or refactor large applications.
+---
 
-4️⃣ Typical Flow
+## Assignment Explanation
 
-Container mounts → fetches data from API → updates state.
+The assignment consists of two main parts:
 
-Container passes state as props → to Presenter.
+### 1. Container Component
+- `ProductListContainer.jsx`
+- Responsibilities:
+  - Fetch products and categories from an API.
+  - Handle filtering, sorting, and search.
+  - Manage cart state (add, remove, update quantity).
+  - Handle loading and error states.
+- **No JSX rendering logic**: the container passes data and handlers as props to presenters.
 
-Presenter renders UI → user interacts → triggers callback.
+### 2. Presenter Components
+- `ProductListPresenter.jsx`, `ProductCard.jsx`, `SortFilterControls.jsx`, `CartSummary.jsx`
+- Responsibilities:
+  - Render the product list UI.
+  - Display cart summary and product details.
+  - Handle user interactions (clicks, filter changes, quantity updates) via callback props.
+- **No API calls or business logic**: presenters only display the data provided by the container.
 
-Callback goes back to Container → Container updates state/business logic → Presenter re-renders with new props.
+### 3. Benefits in this Assignment
+- **Reusability**: Components like `ProductCard` and `CartSummary` can be reused elsewhere.
+- **Testability**: Presenters can be tested independently from containers.
+- **Maintainability**: Easier to extend features like filtering, sorting, or cart functionality without breaking the UI logic.
 
-5️⃣ Example Structure
-/src
-  /containers
-    ProductListContainer.jsx   # handles state, API calls
-  /components
-    ProductListPresenter.jsx   # renders products grid
-    ProductCard.jsx            # displays single product
-    CartSummary.jsx            # shows cart info
-    SortFilterControls.jsx     # sort/filter UI
+---
+
+## How It Works
+
+1. **Container fetches data** from a fake API server (products & categories).  
+2. **Container manages state** like cart items, filters, sorting, and loading.  
+3. **Container passes data and callbacks** to presenters via props.  
+4. **Presenter renders the UI** (products, filters, cart) and triggers callbacks on user actions.  
+5. **Container updates state** based on user actions → Presenter re-renders.
+
+---
+
+## Tech Stack
+- React 19+
+- Tailwind CSS
+- Vite for bundling
+
+---
+
+## Folder Structure
+
