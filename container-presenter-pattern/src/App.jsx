@@ -1,18 +1,15 @@
-
-import './App.css'
+import "./App.css";
+import { ProductListContainer } from "./components/productlist";
 
 function App() {
-
-
   return (
     <>
-      <div>
+      <div className="">
 
-        <h1 className='bg-red-700'> fafafaf</h1>
-        </div>
-       
+        <ProductListContainer/>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
