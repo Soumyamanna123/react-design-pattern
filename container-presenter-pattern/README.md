@@ -1,16 +1,47 @@
-# React + Vite
+Container–Presenter Pattern (aka Smart–Dumb Components)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1️⃣ Core Idea
 
-Currently, two official plugins are available:
+Separate concerns: Keep business logic (data fetching, state management, API calls) separate from UI rendering.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Container (Smart Component): Handles logic, state, and side effects.
 
-## React Compiler
+Presenter (Dumb/Display Component): Handles UI, receives data via props, and raises events back to the container.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2️⃣ Roles & Responsibilities
+Component Type	Responsibilities	Example
+Container	- Fetch data from APIs
+- Manage state (loading, error, cart, filters)
+- Handle business logic (add to cart, sorting, filtering)	ProductListContainer
+Presenter	- Render UI based on props
+- Emit events (like button clicks)
+- Stateless or minimal local state	ProductListPresenter, ProductCard, CartSummary
+3️⃣ Benefits
 
-## Expanding the ESLint configuration
+Separation of concerns – Logic and UI are decoupled.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Reusability – Presenter components can be reused with different data sources.
+
+Testability – Containers and Presenters can be tested independently.
+
+Maintainability – Easier to debug, extend, or refactor large applications.
+
+4️⃣ Typical Flow
+
+Container mounts → fetches data from API → updates state.
+
+Container passes state as props → to Presenter.
+
+Presenter renders UI → user interacts → triggers callback.
+
+Callback goes back to Container → Container updates state/business logic → Presenter re-renders with new props.
+
+5️⃣ Example Structure
+/src
+  /containers
+    ProductListContainer.jsx   # handles state, API calls
+  /components
+    ProductListPresenter.jsx   # renders products grid
+    ProductCard.jsx            # displays single product
+    CartSummary.jsx            # shows cart info
+    SortFilterControls.jsx     # sort/filter UI
